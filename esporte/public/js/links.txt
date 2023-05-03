@@ -1,0 +1,2 @@
+AXIOS: https://axios-http.com/ptbr/docs/intro
+APIFootball: https://apifootball.com/documentation
