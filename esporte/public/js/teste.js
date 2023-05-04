@@ -61,24 +61,87 @@ function localizaJogador(jogador) {
     });
 }
 
-function localizaClube(clube) {
-    axios.get(`https://apiv3.apifootball.com/?action=get_teams&team_name=${clube}&APIkey=${ApiKey}`)
+               
+
+function localizaPais(nomeDoPais) {
+    // Fazer uma solicitação GET para a APIFootball para obter uma lista de todos os países disponíveis
+    axios.get(`https://apiv3.apifootball.com/?action=get_countries&APIkey=${ApiKey}`)
     .then(response => {
-        // Verificar se a resposta tem pelo menos um clube
-        if (Object.keys(response.data).length > 0) {
-                console.log(clube.team_name);
-                console.log(response.country_name);
-                console.log(response.data.founded);
-                console.log(Object.keys(response.data).venue_name);
-                console.log(response.team_badge);           
+        // Filtrar os países que contêm a parte do nome que estamos procurando
+        const paisesEncontrados = response.data.filter(pais => pais.country_name.toLowerCase().includes(nomeDoPais.toLowerCase()));
+        if (paisesEncontrados.length > 0) {
+            console.log(`Países encontrados com "${nomeDoPais}" no nome:`);
+            paisesEncontrados.forEach(pais => console.log(`- ID: ${pais.country_id} | Nome: ${pais.country_name} | Logo: ${pais.country_logo}`));
         } else {
-            console.log(`Nenhum clube correspondente encontrado para "${clube}".`);
+            console.log(`Nenhum país encontrado com "${nomeDoPais}" no nome.`);
         }
     })
     .catch(error => {
         console.log(error);
-    });
+});
+}
+/* Paises possiveis:
+- England
+    id: 44
+    url logo: https://apiv3.apifootball.com/badges/logo_country/44_england.png
+- France
+    id: 3
+    url logo: https://apiv3.apifootball.com/badges/logo_country/3_france.png
+*/    
+
+function localizaCampeonatos() {
+    //${ApiKey}
+
+    for (idPais = 1; idPais <= 200; idPais++) {
+        //console.log(idPais);
+        axios.get(`https://apiv3.apifootball.com/?action=get_leagues&country_id=${idPais}&APIkey=${ApiKey}`)
+        .then(response => {
+            // Verificar se a resposta tem pelo menos uma competição
+            if (response.data.length > 0) {
+                // Exibir o nome e ID de cada competição
+                console.log(`Competições do país com ID ${idPais}:`);
+                response.data.forEach(competicao => {
+                    console.log(`- ${competicao.league_name} (ID: ${competicao.league_id})`);
+                });
+            } else {
+                //console.log(`Nenhuma competição encontrada para o país com ID ${idPais}.`);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+}
+//- Premier League (ID: 177)
+//- Non League Premier (ID: 149)
+
+function clubes(nomeClube) {
+    //${ApiKey}
+    //for (idLiga = 1; idLiga <= 1000; idLiga++) {
+        // Fazer uma solicitação GET para a APIFootball para obter os clubes
+        axios.get(`https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=${ApiKey}`)
+        .then(response => {
+            // Filtrar os clubes que correspondem ao nome desejado
+            const clubesFiltrados = response.data.filter(clube => clube.team_name.startsWith(nomeClube));
+
+            // Verificar se há clubes que correspondem ao nome
+            if (clubesFiltrados.length > 0) {
+                // Exibir o nome e o ID de cada clube correspondente
+                console.log(`Club(es) correspondente(s) ao nome '${nomeClube}':`);
+                clubesFiltrados.forEach(clube => {
+                    console.log(`- ${clube.team_name} (ID: ${clube.team_key})`);
+                });
+            } else {
+                //console.log(`Nenhum clube encontrado correspondente ao nome '${nomeClube}'.`);
+            }
+        })
+        .catch(error => {
+            //console.log(error);
+        });
+    //}
 }
 
-localizaClube('R');
+// localizaCampeonatos();
+clubes("Real");
+// localizaPais('e');
 // localizaJogador('Neymar');
