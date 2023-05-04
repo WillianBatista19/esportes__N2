@@ -141,7 +141,27 @@ function clubes(nomeClube) {
     //}
 }
 
+function localizaPaises() {
+//    https://apiv3.apifootball.com/?action=get_countries&APIkey=xxxxxxxxxxxxxx
+    axios.get(`https://apiv3.apifootball.com/?action=get_countries&APIkey=${ApiKey}`)
+    .then(response => {
+        // Verificar se a resposta tem pelo menos uma competição
+        if (response.data.length > 0) {
+            // Exibir o nome e ID de cada competição
+            response.data.forEach(pais => {
+                console.log(`- ${pais.country_name} (ID: ${pais.country_logo})`);
+            });
+        } else {
+            //console.log(`Nenhuma competição encontrada para o país com ID ${idPais}.`);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });  
+}
+
 // localizaCampeonatos();
-clubes("Real");
+// clubes("Real");
 // localizaPais('e');
 // localizaJogador('Neymar');
+localizaPaises();
