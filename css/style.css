@@ -1,0 +1,178 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.intro-container{
+    box-shadow: 0px 0px 2px 0px gray;
+    width: 100%;
+    height: 50vh;
+    background-image: url('https://d3ugyf2ht6aenh.cloudfront.net/stores/002/351/430/themes/amazonas/slide-1677596472250-100238144-b0a0ed953b0277eb3e34fa18d9047a6d1677596465.png?1312661961');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.pesquisa-container{
+    margin: auto;
+    width: 30%;
+    height: 5vh;
+    position: relative;
+    top: 100px;
+}
+
+.pesquisa-container > button{
+    width: 10%;
+    height: 5vh;
+    cursor: pointer;
+    position: relative;
+    float: right;
+    border: none;
+    background-color: rgb(197, 197, 197);
+}
+
+.pesquisa-container > button > img{
+    width: 90%;
+    height: 5vh;
+}
+
+#campo-pesquisa{
+    border: none;
+    width: 90%;
+    height: 5vh;
+    border-radius: 10px 0px 0px 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 5px 0px gray;
+}
+
+#campo-pesquisa:hover{
+    border: none;   
+}
+
+.consulta-section-h2{
+    display: flex;
+    margin-top: 70px;
+    justify-content: center;
+}
+
+.consulta-section{
+    padding: 25px;
+    margin: 15px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.568);
+}
+
+.consulta-section-h1{
+    margin: 35px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.jogador-consulta{
+    box-shadow: 0px 0px 2px 0px rgb(149, 149, 236);
+    margin-top: 15px;
+    width: 18%;
+    height: 40vh;
+    border-radius: 10px;
+    position: relative;
+}
+
+.jogador-consulta:hover{
+    box-shadow: 0px 0px 5px 0px rgb(149, 149, 236);
+    cursor: pointer;
+    top: -2px;
+}
+
+.jogador-consulta > img {
+    width: 50%;
+    border: 1px solid;
+    height: 17vh;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.jogador-consulta > .p-jogador{
+    margin-bottom: 10px;
+}
+
+
+/* nova estrutura */
+.banner-container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.banner-container > img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 17vh;
+}
+
+.jogador-img{
+    border-radius: 50%;
+    width: 50%;
+    height: 17vh;
+    position: absolute;
+}
+
+.jogador-img > img{
+    border-radius: 50%;
+    width: 100%;
+    height: 17vh;
+    z-index: 1;
+    position: static;
+}
+
+
+.consulta-time-section{
+    padding: 25px;
+    margin-top: 15px;
+    margin-bottom: 100px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+
+.time-consulta{
+    box-shadow: 0px 0px 1px 0px rgb(149, 149, 236);
+    margin-top: 15px;
+    width: 10%;
+    height: 17vh;
+    border-radius: 50%;
+    position: relative;
+}
+
+.time-consulta > img{
+    width: 100%;
+    height: 17vh;
+    margin-bottom: 10px;
+} 
+
+.time-consulta:hover{
+    box-shadow: 0px 0px 5px 0px rgb(149, 236, 175);
+    cursor: pointer;
+    top: -2px;
+}
+
+
+/* footer */
+.footer-container{
+    height: 3vh;
+    margin-top: 15px;
+}
+
+.footer-container > .footer-bar{
+    text-align: center;
+    padding: 10px;
+    height: 2vh;
+    background-color: blanchedalmond;
+    color: black;
+    border-top: 1px solid rgba(128, 128, 128, 0.205);
+}
