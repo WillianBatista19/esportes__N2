@@ -3,25 +3,23 @@ import barcelona_icon from '../../images/barcelona icon.png'
 import manchester_icon from '../../images/manchester logo.png'
 import milan_icon from '../../images/milan logo.png'
 import realMadrid_icon from '../../images/real madrid logo.png'
-
 import axios from "axios";
-
 // import { localizaJogador } from '../js/teste';
-
 import React, { useState } from 'react';
 import Modal from '../modal';
 // import SearchBar from '../SearchBar'
-
-import { ApiKey, ApiKeyTeste } from '../js/teste';
+// import { ApiKey, ApiKeyTeste } from '../js/teste';
+import { ApiKeyTeste } from '../js/teste';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [jogador, setJogador] = useState('');
     const [resultados, setResultados] = useState([]);
+    const [quantidadeResultados, setQuantidadeResultados] = useState(3);
 
     const getJogadores = (name, apiKey) => {
         // Fazer uma solicitação GET para a APIFootball para obter informações dos jogadores
-        axios.get(`https://apiv3.apifootball.com/?action=get_players&player_name=${name}&APIkey=${apiKey}`)
+        axios.get(`https://apiv3.apifootball.com/?action=get_players&player_name=${name}&APIkey=${apiKey}&search=${name}`)
             .then(response => {
                 // Verificar se a resposta tem pelo menos um jogador
                 if (response.data.length > 0) {
@@ -81,13 +79,17 @@ function Home() {
         getJogadores(jogador, ApiKeyTeste)
     }
 
-     function handleModalClose() {
+    function handleModalClose() {
         setIsModalOpen(false);
     }
 
     const handleChange = (event) => {
         setJogador(event.target.value);
     }
+
+    // const handleShowMore = () => {
+    //     setQuantidadeResultados(quantidadeResultados + 3);
+    // }
 
     return (
         <>
@@ -102,27 +104,30 @@ function Home() {
                     </form>
 
                     <div>
-                        {/* <p className={styles.pedroGostoso}>Pedro Gostoso</p> */}
-                        {resultados && resultados.length > 0 &&
-                            <ul>
-                                {resultados.map((resultado, index) => (
-                                    <li key={index}>
-                                        <p>{resultado.nome}</p>
-                                        <p>{resultado.clube}</p>
-                                        <p>{resultado.numero}</p>
-                                        <p>{resultado.posicao}</p>
-                                        <img src={resultado.urlImagem} alt={resultado.nome} />
-                                        <p>{resultado.idade}</p>
-                                        <p>{resultado.nascimento}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        }
-                    </div>
+                        {resultados && resultados.length > 0 && (
+                            <>
+                                <ul>
+                                    {resultados.slice(0, quantidadeResultados).map((resultado, index) => (
+                                        <li key={index}>
+                                            <p>{resultado.nome}</p>
+                                            <p>{resultado.clube}</p>
+                                            <p>{resultado.numero}</p>
+                                            <p>{resultado.posicao}</p>
+                                            <img src={resultado.urlImagem} alt={resultado.nome} />
+                                            <p>{resultado.idade}</p>
+                                            <p>{resultado.nascimento}</p>
+                                        </li>
+                                    ))}
+                                </ul>
 
-                    {!resultados &&
-                        <p>Nenhum resultado encontrado.</p>
-                    }
+                                {resultados.length > quantidadeResultados && (
+                                    <button onClick={() => setQuantidadeResultados(quantidadeResultados + 3)}>Mostrar mais</button>
+                                )}
+                            </>
+                        )}
+
+                        {!resultados && resultados.length === 0 && <p>Nenhum resultado encontrado.</p>}
+                    </div>
                 </div>
                 {/* modal */}
                 <dialog className={styles.modal}>
