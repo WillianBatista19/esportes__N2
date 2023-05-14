@@ -103,7 +103,10 @@ function Home() {
                         <input type="submit" value="Buscar" />
                     </form>
 
-                    <div>
+                    
+                </div>
+
+                <div>
                         {resultados && resultados.length > 0 && (
                             <>
                                 <ul>
@@ -128,7 +131,7 @@ function Home() {
 
                         {!resultados && resultados.length === 0 && <p>Nenhum resultado encontrado.</p>}
                     </div>
-                </div>
+
                 {/* modal */}
                 <dialog className={styles.modal}>
                     <h2>Estatisticas</h2>
