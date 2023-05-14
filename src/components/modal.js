@@ -6,7 +6,7 @@ function Modal(props) {
     <div className={styles.modal}>
       <div className="modal_content">
         <h2>{props.title}</h2>
-        <p className={styles.jogador_p}>Jogos disputados: <span className={styles.jogos_disputados}></span> </p>
+        <p className={styles.jogador_p}>Jogos disputados: <span className={styles.jogos_disputados}></span></p>
         <p className={styles.jogador_p}>Jogos Vencidos: <span className={styles.jogos_vencidos}></span></p>
         <p className={styles.jogador_p}>Gols: <span className={styles.gols_marcados}></span></p>
         <p className={styles.jogador_p}>Cartão Amarelo: <span className={styles.cartoes_amarelos}></span></p>
