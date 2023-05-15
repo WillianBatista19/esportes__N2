@@ -17,7 +17,7 @@
 }
 
 .search_bar > button {
-    width: 10%;
+    width: 12%;
     height: 5vh;
     cursor: pointer;
     position: relative;
@@ -280,7 +280,67 @@
     border-top: 1px solid rgba(128, 128, 128, 0.205);
 }
 
-/* .pedroGostoso {
-    font-size: 100px;
-    color: pink;
-} */
+.resultados {
+    display: flex;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.resultados ul {
+    width: 100%;
+    list-style: none;
+    max-width: 80%; /* largura máxima da lista */
+    margin: 0 auto; /* centraliza a lista na página */
+    padding: 10px;
+}
+
+.resultados ul li {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%; /* largura de cada item */
+    margin: 0 1.66%; /* margem entre cada item */
+    text-align: justify;
+
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade 80% */
+    border-radius: 10px; /* Borda arredondada */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    opacity: 0.8; /* Opacidade 80% */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 10px; /* Espaçamento inferior */
+
+    height: 300px; /* Altura fixa de 100px */
+    margin-right: 10px; /* Espaçamento à direita */
+    vertical-align: top; /* Alinhamento vertical superior */
+}
+
+.resultados ul li img {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: auto;
+}
+
+.resultados button {
+    display: block; /* transforma o botão em bloco para definir largura e margens */
+    max-width: 800px; /* largura máxima da div */
+    margin: 0 auto; /* centraliza a div horizontalmente */
+    max-height: 100px;
+    position: absolute; /* torna o botão filho */
+    bottom: 0; /* alinha o botão à parte inferior da div pai */
+    left: 50%; /* alinha o botão ao centro horizontal */
+    transform: translateX(-50%); /* centraliza o botão horizontalmente */
+    margin-top: 30px; /* define a margem superior */
+    border-radius: 50px; /* define a borda circular */
+    background-color: #3498db; /* define a cor de fundo */
+    color: white; /* define a cor do texto */
+    font-size: 16px; /* define o tamanho da fonte */
+    padding: 12px 24px; /* define o preenchimento do botão */
+    cursor: pointer; /* transforma o cursor em uma mãozinha */
+    transition: all 0.3s ease; /* adiciona uma animação suave */
+}   
+
+.resultados button:hover {
+    background-color: #2980b9;
+  }

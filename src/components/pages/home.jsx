@@ -3,19 +3,26 @@ import barcelona_icon from '../../images/barcelona icon.png'
 import manchester_icon from '../../images/manchester logo.png'
 import milan_icon from '../../images/milan logo.png'
 import realMadrid_icon from '../../images/real madrid logo.png'
+import jogadorPadrao from '../../images/padraoJogador.png'
+
 import axios from "axios";
-// import { localizaJogador } from '../js/teste';
+
 import React, { useState } from 'react';
 import Modal from '../modal';
-// import SearchBar from '../SearchBar'
+
 // import { ApiKey, ApiKeyTeste } from '../js/teste';
 import { ApiKeyTeste } from '../js/teste';
 
 function Home() {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [jogador, setJogador] = useState('');
     const [resultados, setResultados] = useState([]);
-    const [quantidadeResultados, setQuantidadeResultados] = useState(3);
+    const [quantidadeResultados, setQuantidadeResultados] = useState(4);
+
+    const [time, settime] = useState('');
+    const [resultadosTimes, setResultadosTimes] = useState([]);
+    const [quantidadeResultadosTime, setQuantidadeResultadosTime] = useState(4);
 
     const getJogadores = (name, apiKey) => {
         // Fazer uma solicitação GET para a APIFootball para obter informações dos jogadores
@@ -74,6 +81,68 @@ function Home() {
             });
     }
 
+    // const getTimes = (nomeTime, apiKey) => {
+    //     axios
+    //       .get(`https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=${apiKey}`)
+    //       .then((response) => {
+    //         const timesFiltrados = response.data.filter((time) =>
+    //           time.team_name.toLowerCase().startsWith(nomeTime.toLowerCase())
+    //         );
+
+    //         if (timesFiltrados.length > 0) {
+    //           const resultado = timesFiltrados.slice(0, 3).map((time) => {
+    //             const jogadores = time.players.map((jogador) => jogador.player_name);
+    //             const tecnicos = time.coaches.map((tecnico) => tecnico.coach_name);
+
+    //             const resposta = {
+    //               nome: time.team_name,
+    //               urlImagem: time.team_badge,
+    //               jogadores: jogadores.length > 0 ? jogadores : 'Sem dados',
+    //               tecnicos: tecnicos.length > 0 ? tecnicos : 'Sem dados',
+    //             };
+
+    //             return resposta;
+    //           });
+    //           setResultados(resultado);
+    //         } else {
+    //           console.log(`Nenhum time encontrado correspondente ao nome '${nomeTime}'.`);
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   };
+
+    const getTimes = (nomeTime, apiKey) => {
+        axios
+            .get(`https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=${apiKey}`)
+            .then((response) => {
+                const timesFiltrados = response.data;
+
+                if (timesFiltrados.length > 0) {
+                    const resultado = timesFiltrados.slice(0, 3).map((time) => {
+                        const jogadores = time.players.map((jogador) => jogador.player_name);
+                        const tecnicos = time.coaches.map((tecnico) => tecnico.coach_name);
+
+                        const resposta = {
+                            nome: time.team_name,
+                            urlImagem: time.team_badge,
+                            jogadores: jogadores.length > 0 ? jogadores : 'Sem dados',
+                            tecnicos: tecnicos.length > 0 ? tecnicos : 'Sem dados',
+                        };
+
+                        return resposta;
+                    });
+                    setResultadosTimes(resultado);
+                } else {
+                    console.log(`Nenhum time encontrado correspondente ao nome '${nomeTime}'.`);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         getJogadores(jogador, ApiKeyTeste)
@@ -87,8 +156,30 @@ function Home() {
         setJogador(event.target.value);
     }
 
-    // const handleShowMore = () => {
-    //     setQuantidadeResultados(quantidadeResultados + 3);
+    const handleTimeSubmit = (event) => {
+        event.preventDefault();
+        getTimes(time, ApiKeyTeste)
+    }
+
+    const handleTimeChange = (event) => {
+        settime(event.target.value);
+    }
+
+
+
+
+    // const BuscaTimes = () => {
+    //     const [time, setTime] = useState('');
+    //     const [resultados, setResultados] = useState([]);
+
+    //     const handleSubmitTime = (event) => {
+    //       event.preventDefault();
+    //       getTimes(time, ApiKeyTeste);
+    //     };
+
+    //     const handleChangeTime = (event) => {
+    //       setTime(event.target.value);
+    //     }; 
     // }
 
     return (
@@ -96,41 +187,136 @@ function Home() {
             <main>
                 <div className={styles.intro_container}>
                     <form className={styles.pesquisa_container} onSubmit={handleSubmit}>
-                        <label>
-                            Nome do jogador:
-                            <input type="text" value={jogador} onChange={handleChange} />
+                        <label className={styles.search_bar}>
+                            <input className={styles.campo_pesquisa} type="text" value={jogador} onChange={handleChange} placeholder='Digite o nome do jogador aqui...' />
+                            <input className={styles.button} type="submit" value={"Buscar"} />
                         </label>
-                        <input type="submit" value="Buscar" />
                     </form>
-
-                    
+                    {!resultados &&
+                        <p>Nenhum resultado encontrado.</p>
+                    }
                 </div>
 
-                <div>
-                        {resultados && resultados.length > 0 && (
-                            <>
-                                <ul>
-                                    {resultados.slice(0, quantidadeResultados).map((resultado, index) => (
-                                        <li key={index}>
-                                            <p>{resultado.nome}</p>
-                                            <p>{resultado.clube}</p>
-                                            <p>{resultado.numero}</p>
-                                            <p>{resultado.posicao}</p>
-                                            <img src={resultado.urlImagem} alt={resultado.nome} />
-                                            <p>{resultado.idade}</p>
-                                            <p>{resultado.nascimento}</p>
-                                        </li>
-                                    ))}
-                                </ul>
+                <div className={styles.resultados}>
+                    {resultados && resultados.length > 0 && (
+                        <>
+                            <ul>
+                                {resultados.slice(0, quantidadeResultados).map((resultado, index) => (
+                                    <li key={index}>
+                                        <p>Nome: {resultado.nome}</p>
+                                        <p>Clube: {resultado.clube}</p>
+                                        <p>Nº: {resultado.numero}</p>
+                                        <p>Posição: {resultado.posicao}</p>
+                                        <p>Idade: {resultado.idade}</p>
+                                        <p>Nascimento: {resultado.nascimento}</p>
+                                        <img src={resultado.urlImagem} alt={resultado.nome} onError={(e) => e.target.src = jogadorPadrao} />
+                                    </li>
+                                ))}
+                            </ul>
 
-                                {resultados.length > quantidadeResultados && (
-                                    <button onClick={() => setQuantidadeResultados(quantidadeResultados + 3)}>Mostrar mais</button>
-                                )}
-                            </>
-                        )}
+                            {resultados.length > quantidadeResultados && (
+                                <button onClick={() => setQuantidadeResultados(quantidadeResultados + 4)}>Mostrar mais</button>
+                            )}
+                        </>
+                    )}
 
-                        {!resultados && resultados.length === 0 && <p>Nenhum resultado encontrado.</p>}
-                    </div>
+                    {!resultados && resultados.length === 0 && <p>Nenhum resultado encontrado.</p>}
+                </div>
+
+                <form className={styles.pesquisa_container} onSubmit={handleTimeSubmit}>
+                    <label className={styles.search_bar}>
+                        <input
+                            className={styles.campo_pesquisa}
+                            type="text"
+                            value={time}
+                            onChange={handleTimeChange}
+                            placeholder="Digite o nome do time aqui..."
+                        />
+                        <input className={styles.button} type="submit" value={"Buscar"} />
+                    </label>
+                </form>
+
+                <div className={styles.resultados}>
+                    {resultadosTimes && resultadosTimes.length > 0 && (
+                        <>
+                            <ul>
+                                {resultadosTimes.slice(0, quantidadeResultadosTime).map((resultado, index) => (
+                                    <li key={index}>
+                                        <p>Nome do Time: {resultado.team_name}</p>
+                                        <p>País: {resultado.pais}</p>
+                                        <p>Escudo: {resultado.escudo}</p>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {resultadosTimes.length > quantidadeResultadosTime && (
+                                <button onClick={() => setQuantidadeResultadosTime(quantidadeResultadosTime + 4)}>Mostrar mais</button>
+                            )}
+                        </>
+                    )}
+
+                    {!resultadosTimes && resultadosTimes.length === 0 && <p>Nenhum resultado encontrado.</p>}
+                </div>
+
+
+                {/* <div className={styles.intro_container}>
+                    <form className={styles.pesquisa_container} onSubmit={handleSubmit}>
+                        <label className={styles.search_bar}>
+                            <input
+                                className={styles.campo_pesquisa}
+                                type="text"
+                                value={jogador}
+                                onChange={handleChange}
+                                placeholder="Digite o nome do jogador aqui..."
+                            />
+                            <input className={styles.button} type="submit" value={"Buscar"} />
+                        </label>
+                    </form>
+                    {!resultados && !resultadosTimes && <p>Nenhum resultado encontrado.</p>}
+                    {resultados && resultados.length > 0 && (
+                        <div className={styles.resultados}>
+                            <h2>Resultados da pesquisa de jogadores</h2>
+                            <ul>
+                                {resultados.slice(0, 5).map((item) => (
+                                    <li key={item.id}>{item.nome}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div> */}
+
+                {/* <div>
+                    <form onSubmit={handleChangeTime}>
+                        <label>
+                            Nome do time:
+                            <input type="text" value={time} onChange={handleChangeTime} />
+                        </label>
+                        <button type="submit">Buscar</button>
+                    </form>
+
+                    {resultados.length > 0 && (
+                        <div>
+                            {resultados.map((resultado) => (
+                                <div key={resultado.nome}>
+                                    <h2>{resultado.nome}</h2>
+                                    <img src={resultado.urlImagem} alt={`Escudo do ${resultado.nome}`} />
+                                    <h3>Jogadores:</h3>
+                                    <ul>
+                                        {resultado.jogadores.map((jogador) => (
+                                            <li key={jogador}>{jogador}</li>
+                                        ))}
+                                    </ul>
+                                    <h3>Técnicos:</h3>
+                                    <ul>
+                                        {resultado.tecnicos.map((tecnico) => (
+                                            <li key={tecnico}>{tecnico}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div> */}
 
                 {/* modal */}
                 <dialog className={styles.modal}>
