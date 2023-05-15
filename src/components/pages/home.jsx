@@ -176,7 +176,7 @@ function Home() {
                                     type="text"
                                     value={nomeClube}
                                     onChange={(e) => handleTimeChange(e.target.value)}
-                                    placeholder="Digite o nome do clube aqui..."
+                                    placeholder="Digite o nome com a PRIMEIRA LETRA MAIÚSCULA..."
                                 />
                                 <input className={styles.button} type="submit" value="Buscar" />
                             </label>
