@@ -64,6 +64,6 @@ export function localizaJogador(jogador, ApiKey) {
 // Exemplo de utilização da função localizaJogador:
 export const ApiKey = '783e6787ac50c4ed6e66910b34f4a245f81a0588abcaf7674f82b7fcef7bb4d5';
 export const ApiKeyTeste2 = '751c992f2d845972bf932f489c142456784f17668a19a24de428157417a35ac5';
-export const ApiKeyTeste3 = '1550aa32bb5e41877cc98e39c8e9a59134299c6555cbec7fedf2bd9a39820b26';
-export const ApiKeyTeste = '6a52ecb06c71b2f676ead3ae22fa6217a1c2b580e8581cbf80015a616add1e23';
+export const ApiKeyTeste = '1550aa32bb5e41877cc98e39c8e9a59134299c6555cbec7fedf2bd9a39820b26';
+export const ApiKeyTeste3 = '6a52ecb06c71b2f676ead3ae22fa6217a1c2b580e8581cbf80015a616add1e23';
 // localizaJogador('Neymar', ApiKey);
